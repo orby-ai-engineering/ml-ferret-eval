@@ -43,3 +43,6 @@ ferret/train/ferret_trainer.py
 ferret/train/llama_flash_attn_monkey_patch.py
 ferret/train/train.py
 ferret/train/train_mem.py
+screenspot/screenspot_eval.py
+screenspot/screenspot_output.py
+screenspot/seeclick_infer.py
