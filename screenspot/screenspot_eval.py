@@ -125,8 +125,8 @@ def is_output_in_bbox(data):
         else:
             return False, None
     else:
-        # x,y = map(int, output.strip('()').split(', '))
-        x, y = output[0] / 1000 * data["img_w"], output[1] / 1000 * data["img_h"]
+        # x, y = map(int, output.strip('()').split(', '))
+        x, y = output[0], output[1]
 
         scale = data.get('scale', 1)
         # print('scale', scale)

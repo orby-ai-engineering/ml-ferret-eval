@@ -161,7 +161,7 @@ def eval_model_screenspot(args):
 
     chunk_data_ids = get_chunk(data_ids, args.num_chunks, args.chunk_idx)
     answers_file = os.path.expanduser(args.answers_file)
-    ans_file = open(answers_file, "w")
+    ans_file = open(answers_file, "a")
 
     for i, id in enumerate(tqdm(chunk_data_ids)):
         img, ann = dataset[id]
