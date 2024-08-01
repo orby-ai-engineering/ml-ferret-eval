@@ -121,7 +121,7 @@ Please do not output anything else.\
 """
 
     def __getitem__(self, idx):
-        img = os.path.join(self.img_folder, self.targets[idx]["img_filename"])
+        img = Image(os.path.join(self.img_folder, self.targets[idx]["img_filename"]))
         target = self.targets[idx]
         print("TARGET: ", target)
 
@@ -139,7 +139,7 @@ Please do not output anything else.\
         target["question"] = question
         target["bbox_xyxy"] = bbox_xyxy.tolist()
 
-        return Image(img), target
+        return img, target
     
     def __len__(self):
         return len(self.targets)
