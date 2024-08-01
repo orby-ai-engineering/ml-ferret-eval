@@ -115,9 +115,7 @@ class ScreenSpotGrounding():
             self.targets = [json.loads(line) for line in f]
         print("NUMBER OF TARGETS: ", len(self.targets))
         self.question_prompt = """\
-In this UI screenshot, what is the position of the element corresponding to the command \"<obj>\"? \
-Please answer this question with a pair of coordinates [x, y], each normalized to a value between 0 and 1.\
-Please do not output anything else.\
+In this UI screenshot, what is the position of the element corresponding to the command \"<obj>\"?\
 """
 
     def __getitem__(self, idx):
