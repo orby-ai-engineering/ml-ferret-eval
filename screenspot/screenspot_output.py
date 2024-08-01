@@ -110,8 +110,7 @@ def find_bbox_template(text, img_w, img_h):
 
 class ScreenSpotGrounding():
     def __init__(self, img_folder, ann_file):
-        self.imgs = glob.glob(os.path.join(img_folder, "*.png"))
-        print("NUMBER OF IMAGES: ", len(self.imgs))
+        self.img_folder = img_folder
         with open(ann_file, "r") as f:
             self.targets = [json.loads(line) for line in f]
         print("NUMBER OF TARGETS: ", len(self.targets))
@@ -122,10 +121,11 @@ Please do not output anything else.\
 """
 
     def __getitem__(self, idx):
-        img = self.imgs[idx]
+        img = os.path.join(self.img_folder, self.targets[idx]["img_filename"])
         target = self.targets[idx]
+        print("TARGET: ", target)
 
-        bbox_xywh = target[0]["bbox"]
+        bbox_xywh = target["bbox"]
         bbox_xyxy = np.array([bbox_xywh[0], bbox_xywh[1], bbox_xywh[0] + bbox_xywh[2], bbox_xywh[1] + bbox_xywh[3]])
         w, h = img.size
         bbox_xyxy[0::2].clip(min=0, max=w)
