@@ -133,6 +133,9 @@ class ScreenSpotGrounding(torchvision.datasets.CocoDetection):
         target["bbox_xyxy"] = bbox_xyxy.tolist()
 
         return img, target
+    
+    def __len__(self):
+        return len(self.targets)
 
 
 def eval_model_screenspot(args):
