@@ -16,6 +16,7 @@ CUDA_VISIBLE_DEVICES=0 python -m ferret.eval.model_refcoco \
 
 """
 
+import glob
 import argparse
 import torch
 import os
@@ -107,15 +108,21 @@ def find_bbox_template(text, img_w, img_h):
 
     return entities, list_bboxes
 
-class ScreenSpotGrounding(torchvision.datasets.CocoDetection):
+class ScreenSpotGrounding():
     def __init__(self, img_folder, ann_file):
-        super(ScreenSpotGrounding, self).__init__(img_folder, None)
+        self.imgs = glob.glob(os.path.join(img_folder, "*.jpg"))
+        print("NUMBER OF IMAGES: ", len(self.imgs))
         with open(ann_file, "r") as f:
             self.targets = [json.loads(line) for line in f]
-        self.question_prompt = "In this UI screenshot, what is the position of the element corresponding to the command <obj> (with point)?"
+        print("NUMBER OF TARGETS: ", len(self.targets))
+        self.question_prompt = """\
+In this UI screenshot, what is the position of the element corresponding to the command \"<obj>\"? \
+Please answer this question with a pair of coordinates [x, y], each normalized to a value between 0 and 1.\
+Please do not output anything else.\
+"""
 
     def __getitem__(self, idx):
-        img, _ = super(ScreenSpotGrounding, self).__getitem__(idx)
+        img = self.imgs[idx]
         target = self.targets[idx]
 
         bbox_xywh = target[0]["bbox"]
@@ -172,7 +179,7 @@ def eval_model_screenspot(args):
         conv.append_message(conv.roles[1], None)
         prompt = conv.get_prompt()
 
-        print(prompt)
+        print("PROMPT:", prompt)
 
         input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt').unsqueeze(0).cuda()
         image_tensor = image_processor.preprocess(img, return_tensors='pt', do_resize=True,
