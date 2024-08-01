@@ -218,7 +218,7 @@ def eval_model_screenspot(args):
 
         ann["prompt"] = cur_prompt
         ann["output"] = outputs
-        ann["operation"] = outputs
+        print("OUTPUTS:", outputs)
         ans_file.write(json.dumps(ann) + "\n")
         ans_file.flush()
     ans_file.close()
