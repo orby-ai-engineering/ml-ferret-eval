@@ -113,8 +113,8 @@ class ScreenSpotGrounding():
             self.targets = [json.loads(line) for line in f]
         print("NUMBER OF TARGETS: ", len(self.targets))
         self.question_prompt = """\
-In this UI screenshot, what is the position of the element corresponding to the command \"<obj>\"?
-Please output the bounding box of the element.\
+In this UI screenshot, what is the position of the element corresponding to \"<obj>\"?
+Please output the bounding box of the element. Please make the bounding box as specific as possible.\
 """
 
     def __getitem__(self, idx):
@@ -141,9 +141,8 @@ Please output the bounding box of the element.\
     def __len__(self):
         return len(self.targets)
 
-def create_center_point(outputs):
-    box_match = re.search(r'\[(\d+),\s*(\d+),\s*(\d+),\s*(\d+)\]', outputs)
-    x1, y1, x2, y2 = map(float, box_match.groups())
+def create_center_point(bbox):
+    x1, y1, x2, y2 = bbox
     center_x = (x1 + x2) / 2
     center_y = (y1 + y2) / 2
     return [center_x, center_y]
@@ -222,8 +221,9 @@ def eval_model_screenspot(args):
         ann["prompt"] = cur_prompt
         
         # create center point output
-        ann["output"] = create_center_point(outputs)
+        ann["output"] = create_center_point(pred_bboxes)
         print("OUTPUTS:", outputs)
+        print("PREDICTIONS:", ann["output"])
         ann["operation"] = outputs
         ans_file.write(json.dumps(ann) + "\n")
         ans_file.flush()
