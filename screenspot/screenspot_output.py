@@ -215,16 +215,16 @@ def eval_model_screenspot(args):
         outputs = outputs.strip()
 
         # Plot Preds
-        # pred_entities, pred_bboxes = find_bbox_template(outputs, img_w=img_w, img_h=img_h)
-        # img = plot_refexp(img, pred_bboxes[0], pred_entities, mode="pred")
-        # img.save('refexp_result/images/{}.png'.format(i))
+        pred_entities, pred_bboxes = find_bbox_template(outputs, img_w=ann["img_w"], img_h=ann["img_h"])
+        img = plot_refexp(img, pred_bboxes[0], pred_entities, mode="pred")
+        img.save('refexp_result/images/{}.png'.format(i))
 
         ann["prompt"] = cur_prompt
         
         # create center point output
         ann["output"] = create_center_point(outputs)
         print("OUTPUTS:", outputs)
-
+        ann["operation"] = outputs
         ans_file.write(json.dumps(ann) + "\n")
         ans_file.flush()
     ans_file.close()

@@ -77,7 +77,7 @@ def extract_coordinates(operation, image_path):
 
 def save_image_with_annotations(data, save_base_dir, correct, coords):
     img_filename = data["img_filename"]
-    image_path = os.path.join("/fs/ess/PAS1576/boyu_gou/Benchmark/ScreenSpot/screenspot_imgs_original_size", img_filename)
+    image_path = os.path.join("screenspot_imgs", img_filename)
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
 
@@ -125,7 +125,8 @@ def is_output_in_bbox(data):
         else:
             return False, None
     else:
-        x,y = map(int, output.strip('()').split(', '))
+        # x,y = map(int, output.strip('()').split(', '))
+        x, y = output[0] / 1000 * data["img_w"], output[1] / 1000 * data["img_h"]
 
         scale = data.get('scale', 1)
         # print('scale', scale)
@@ -174,8 +175,8 @@ def calculate_accuracy(file_path, save_base_dir, save):
 
 def main():
     # Replace 'data.jsonl' with the path to your jsonl file
-    file_paths = ['4o_v3_query.jsonl', 'gpt_4_turbo_v3_query.jsonl']
-    save = True
+    file_paths = ['ferret-7b-v1.3-4o_v3_query.jsonl']
+    save = False
 
     for file_path in file_paths:
         save_base_dir = file_path.replace('.jsonl', '')
