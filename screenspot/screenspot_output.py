@@ -139,7 +139,7 @@ Please do not output anything else.\
         target["question"] = question
         target["bbox_xyxy"] = bbox_xyxy.tolist()
 
-        return img, target
+        return Image(img), target
     
     def __len__(self):
         return len(self.targets)
