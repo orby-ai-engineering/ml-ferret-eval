@@ -110,7 +110,7 @@ def find_bbox_template(text, img_w, img_h):
 
 class ScreenSpotGrounding():
     def __init__(self, img_folder, ann_file):
-        self.imgs = glob.glob(os.path.join(img_folder, "*.jpg"))
+        self.imgs = glob.glob(os.path.join(img_folder, "*.png"))
         print("NUMBER OF IMAGES: ", len(self.imgs))
         with open(ann_file, "r") as f:
             self.targets = [json.loads(line) for line in f]
