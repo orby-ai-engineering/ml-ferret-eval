@@ -113,8 +113,8 @@ class ScreenSpotGrounding():
             self.targets = [json.loads(line) for line in f]
         print("NUMBER OF TARGETS: ", len(self.targets))
         self.question_prompt = """\
-In this UI screenshot, what is the position of the element corresponding to \"<obj>\"?
-Please output the bounding box of the element. Please make the bounding box as specific as possible.\
+In this UI screenshot, what is the bounding box of the element corresponding to \"<obj>\"?\
+Please make the bounding box as specific as possible.\
 """
 
     def __getitem__(self, idx):
@@ -161,7 +161,7 @@ def eval_model_screenspot(args):
 
     chunk_data_ids = get_chunk(data_ids, args.num_chunks, args.chunk_idx)
     answers_file = os.path.expanduser(args.answers_file)
-    ans_file = open(answers_file, "a")
+    ans_file = open(answers_file, "w")
 
     for i, id in enumerate(tqdm(chunk_data_ids)):
         img, ann = dataset[id]
