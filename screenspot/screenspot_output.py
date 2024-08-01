@@ -215,15 +215,18 @@ def eval_model_screenspot(args):
         print("OUTPUTS:", outputs)
 
         # Plot Preds
-        pred_entities, pred_bboxes = find_bbox_template(outputs, img_w=ann["img_w"], img_h=ann["img_h"])
-        img = plot_refexp(img, pred_bboxes[0], pred_entities, mode="pred")
-        img.save('refexp_result/images/{}.png'.format(i))
-
+        try:
+            pred_entities, pred_bboxes = find_bbox_template(outputs, img_w=ann["img_w"], img_h=ann["img_h"])
+            img = plot_refexp(img, pred_bboxes[0], pred_entities, mode="pred")
+            img.save('refexp_result/images/{}.png'.format(i))
+            # create center point output
+            ann["output"] = create_center_point(pred_bboxes[0])
+            print("PREDICTIONS:", ann["output"])
+        except Exception as _:
+            # if there is no output, set the output to -1, -1
+            print("PREDICTIONS:", "NO BOUNDING BOX FOUND")
+            ann["output"] = [-1, -1]
         ann["prompt"] = cur_prompt
-        
-        # create center point output
-        ann["output"] = create_center_point(pred_bboxes[0])
-        print("PREDICTIONS:", ann["output"])
         ann["operation"] = outputs
         ans_file.write(json.dumps(ann) + "\n")
         ans_file.flush()
