@@ -75,7 +75,7 @@ if __name__ == "__main__":
     parser.add_argument("--model-path", type=str, default="/fs/ess/PAS1576/boyu_gou/demi/model/SeeClick")
     parser.add_argument("--question-file", type=str, required=True)
     parser.add_argument("--answers-file", type=str, required=True)
-    parser.add_argument("--image-folder", type=str, default="/fs/ess/PAS1576/boyu_gou/Benchmark/ScreenSpot/screenspot_imgs_original_size")
+    parser.add_argument("--image-folder", type=str, default="../screenspot_imgs")
     parser.add_argument("--image-key", type=str, default="img_filename")
     args = parser.parse_args()
 
