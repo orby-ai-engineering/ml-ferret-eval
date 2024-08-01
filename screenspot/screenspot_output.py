@@ -142,8 +142,8 @@ Please output the bounding box of the element.\
         return len(self.targets)
 
 def create_center_point(outputs):
-    box_match = re.search(r'\[\[(\d+),(\d+),(\d+),(\d+)\]\]', outputs)
-    x1, y1, x2, y2 = map(int, box_match.groups())
+    box_match = re.search(r'\[(\d+),\s*(\d+),\s*(\d+),\s*(\d+)\]', outputs)
+    x1, y1, x2, y2 = map(float, box_match.groups())
     center_x = (x1 + x2) / 2
     center_y = (y1 + y2) / 2
     return [center_x, center_y]
