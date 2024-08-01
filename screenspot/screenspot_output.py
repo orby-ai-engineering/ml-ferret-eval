@@ -121,7 +121,7 @@ Please do not output anything else.\
 """
 
     def __getitem__(self, idx):
-        img = Image(os.path.join(self.img_folder, self.targets[idx]["img_filename"]))
+        img = Image.open(os.path.join(self.img_folder, self.targets[idx]["img_filename"]))
         target = self.targets[idx]
         print("TARGET: ", target)
 
