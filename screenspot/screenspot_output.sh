@@ -1,4 +1,4 @@
-DATA_PATH="remaining_4o_v3_query.jsonl"
+DATA_PATH="4o_v3_query.jsonl"
 MODEL_PATH="../model/ferret-7b-v1.3"
 ANSWER_FILE="ferret-7b-v1.3-4o_v3_query.jsonl"
 
