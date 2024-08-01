@@ -16,7 +16,6 @@ CUDA_VISIBLE_DEVICES=0 python -m ferret.eval.model_refcoco \
 
 """
 
-import glob
 import argparse
 import torch
 import os
@@ -30,7 +29,6 @@ from ferret.conversation import conv_templates, SeparatorStyle
 from ferret.utils import disable_torch_init
 import re
 import math
-import torchvision
 import numpy as np
 
 # Added for visualization
@@ -143,6 +141,12 @@ Please output the bounding box of the element.\
     def __len__(self):
         return len(self.targets)
 
+def create_center_point(outputs):
+    box_match = re.search(r'\[\[(\d+),(\d+),(\d+),(\d+)\]\]', outputs)
+    x1, y1, x2, y2 = map(int, box_match.groups())
+    center_x = (x1 + x2) / 2
+    center_y = (y1 + y2) / 2
+    return [center_x, center_y]
 
 def eval_model_screenspot(args):
     # Data
@@ -216,8 +220,11 @@ def eval_model_screenspot(args):
         # img.save('refexp_result/images/{}.png'.format(i))
 
         ann["prompt"] = cur_prompt
-        ann["output"] = outputs
+        
+        # create center point output
+        ann["output"] = create_center_point(outputs)
         print("OUTPUTS:", outputs)
+
         ans_file.write(json.dumps(ann) + "\n")
         ans_file.flush()
     ans_file.close()
