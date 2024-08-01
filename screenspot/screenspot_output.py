@@ -221,7 +221,7 @@ def eval_model_screenspot(args):
         ann["prompt"] = cur_prompt
         
         # create center point output
-        ann["output"] = create_center_point(pred_bboxes)
+        ann["output"] = create_center_point(pred_bboxes[0])
         print("OUTPUTS:", outputs)
         print("PREDICTIONS:", ann["output"])
         ann["operation"] = outputs
