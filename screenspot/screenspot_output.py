@@ -212,6 +212,7 @@ def eval_model_screenspot(args):
         if outputs.endswith(stop_str):
             outputs = outputs[:-len(stop_str)]
         outputs = outputs.strip()
+        print("OUTPUTS:", outputs)
 
         # Plot Preds
         pred_entities, pred_bboxes = find_bbox_template(outputs, img_w=ann["img_w"], img_h=ann["img_h"])
@@ -222,7 +223,6 @@ def eval_model_screenspot(args):
         
         # create center point output
         ann["output"] = create_center_point(pred_bboxes[0])
-        print("OUTPUTS:", outputs)
         print("PREDICTIONS:", ann["output"])
         ann["operation"] = outputs
         ans_file.write(json.dumps(ann) + "\n")
