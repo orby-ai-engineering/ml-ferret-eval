@@ -129,7 +129,7 @@ Please make the bounding box as specific as possible.\
         bbox_xyxy[1::2].clip(min=0, max=h)
 
         assert "<obj>" in self.question_prompt
-        question = self.question_prompt.replace("<obj>", target["description"])
+        question = self.question_prompt.replace("<obj>", target["instruction"])
 
         target["img_w"] = w
         target["img_h"] = h
