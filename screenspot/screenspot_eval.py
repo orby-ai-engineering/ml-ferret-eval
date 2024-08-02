@@ -175,7 +175,7 @@ def calculate_accuracy(file_path, save_base_dir, save):
 
 def main():
     # Replace 'data.jsonl' with the path to your jsonl file
-    file_paths = ['ferret-7b-v1.3-4o_v3_query.jsonl']
+    file_paths = ['ferret-7b-v1.3-org_v3_query.jsonl']
     save = False
 
     for file_path in file_paths:
